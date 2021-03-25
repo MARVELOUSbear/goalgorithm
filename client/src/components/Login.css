@@ -48,7 +48,7 @@ form {
   padding: 0 2em;
 }
 
-.btn {
+.loginBtn {
   transition: all 0.5s ease;
   width: 70%;
   border-radius: 30px;
@@ -59,8 +59,8 @@ form {
   margin-top: 1.5em;
   margin-bottom: 1em;
 }
-.btn:hover,
-.btn:focus {
+.loginBtn:hover,
+.loginBtn:focus {
   background-color: #008080;
   color: #fff;
 }

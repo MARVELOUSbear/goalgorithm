@@ -1,22 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import { useHistory, Redirect } from 'react-router';
 import './Login.css';
 import Input from './Input';
 
 function Login() {
+  const history = useHistory();
   const [loginFormData, setLoginFormData] = useState({
     email: '',
     password: '',
   });
 
   const onChangeEventListener = (e) => {
-    // console.log(e.target.name);
-    // console.log(e.target.value);
-    // console.log(loginFormData);
     setLoginFormData({
       ...loginFormData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const submitLoginForm = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('clicked');
+  };
+
+  const postLoginData = async () => {
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(loginFormData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status) {
+          localStorage.setItem('current_user', data.user_id);
+          history.push('/testConnection');
+        } else {
+          console.log('Something wrong');
+        }
+      })
+      .catch(() => {
+        console.error('Error');
+      });
   };
 
   return (
@@ -36,7 +63,7 @@ function Login() {
               <h2>Log In</h2>
             </div>
             <div className="row">
-              <form control="" className="form-group">
+              <form onSubmit={submitLoginForm} className="form-group">
                 <Input
                   type="email"
                   name="email"
@@ -53,13 +80,17 @@ function Login() {
                 />
 
                 <div className="row justify-content-center">
-                  <input type="submit" value="Submit" className="btn" />
+                  <input
+                    type="submit"
+                    value="Submit"
+                    className="btn loginBtn"
+                  />
                 </div>
               </form>
             </div>
             <div className="row">
               <p>
-                Don't have an account? <a href="#">Register Here</a>
+                Don't have an account? <a href="/register">Register Here</a>
               </p>
             </div>
           </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, Redirect } from 'react-router';
 import { InputGroup, Form, Button } from 'react-bootstrap';
 import Input from './Input';
+import Swal from 'sweetalert2';
 
 function Register() {
   const [registerFormData, setRegisterFormData] = useState({

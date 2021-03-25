@@ -6,6 +6,7 @@ function Input({ type, name, className, placeholder, onChange }) {
   return (
     <div className="row justify-content-center">
       <input
+        required
         type={type}
         name={name}
         className={className}

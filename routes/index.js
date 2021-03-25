@@ -27,4 +27,24 @@ router.post('/register', async (req, res) => {
   }
 });
 
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await goalgorithmDB.getUser(email);
+    console.log(user);
+    const match = await bcrypt.compare(password, user.password);
+    if (match) {
+      res.send({ status: true, user_id: user._id });
+    } else {
+      res.send({
+        status: false,
+      });
+    }
+  } catch {
+    res.send({
+      status: false,
+    });
+  }
+});
+
 module.exports = router;

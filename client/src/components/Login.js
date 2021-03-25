@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useHistory, Redirect } from 'react-router';
+import Swal from 'sweetalert2';
 import './Login.css';
 import Input from './Input';
 
@@ -18,10 +19,12 @@ function Login() {
     });
   };
 
+  const checkLoginFormData = () => {};
+
   const submitLoginForm = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('clicked');
+    postLoginData();
   };
 
   const postLoginData = async () => {
@@ -38,11 +41,11 @@ function Login() {
           localStorage.setItem('current_user', data.user_id);
           history.push('/testConnection');
         } else {
-          console.log('Something wrong');
+          Swal.fire('Oops...', 'Something went wrong!', 'error');
         }
       })
       .catch(() => {
-        console.error('Error');
+        Swal.fire('Oops...', 'Something went wrong!', 'error');
       });
   };
 

@@ -21,4 +21,19 @@ module.exports = {
       client.close();
     }
   },
+
+  getUser: async (email) => {
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    try {
+      await client.connect();
+      const db = client.db('goalgorithm');
+      const users = db.collection('user');
+      const userFound = await users.findOne({
+        email: email,
+      });
+      return userFound;
+    } finally {
+      client.close();
+    }
+  },
 };

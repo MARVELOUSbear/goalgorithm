@@ -37,15 +37,21 @@ function Login() {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.status) {
+        if (data.status === 'verified') {
           localStorage.setItem('current_user', data.user_id);
           history.push('/testConnection');
+        } else if (data.status === 'notMatch') {
+          Swal.fire('Oops...', 'Wrong Password!', 'error');
         } else {
-          Swal.fire('Oops...', 'Something went wrong!', 'error');
+          Swal.fire(
+            'Oops...',
+            'This account does not exsit in our system!',
+            'error'
+          );
         }
       })
       .catch(() => {
-        Swal.fire('Oops...', 'Something went wrong!', 'error');
+        console.log('Something wrong');
       });
   };
 

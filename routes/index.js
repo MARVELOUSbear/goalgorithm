@@ -31,13 +31,18 @@ router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await goalgorithmDB.getUser(email);
-    console.log(user);
-    const match = await bcrypt.compare(password, user.password);
-    if (match) {
-      res.send({ status: true, user_id: user._id });
-    } else {
+    if (!user) {
       res.send({
         status: false,
+      });
+      return;
+    }
+    const match = await bcrypt.compare(password, user.password);
+    if (match) {
+      res.send({ status: 'verified', user_id: user._id });
+    } else {
+      res.send({
+        status: 'notMatch',
       });
     }
   } catch {

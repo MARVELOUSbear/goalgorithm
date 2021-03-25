@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
 
 function TestConnection() {
   const [data, setData] = useState(null);
@@ -17,6 +18,7 @@ function TestConnection() {
     <div>
       <h2>hello</h2>
       <h1>{data}</h1>
+      <Button variant="primary">Primary</Button>
     </div>
   );
 }

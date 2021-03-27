@@ -52,4 +52,15 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get('/currentUser', async (req, res) => {
+  console.log('id is ', req.query);
+  const { id } = req.query;
+  try {
+    const user = await goalgorithmDB.getUserById(id);
+    res.json(user);
+  } catch (err) {
+    res.send(err);
+  }
+});
+
 module.exports = router;

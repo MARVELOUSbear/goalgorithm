@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useHistory } from 'react-router-dom';
+import Navigation from './Navigation';
 function TestConnection() {
   const [data, setData] = useState(null);
   const history = useHistory();
@@ -28,6 +29,7 @@ function TestConnection() {
 
   return (
     <div>
+      <Navigation />
       <h2>hello</h2>
       <h1>{data}</h1>
       <h1>{currentUser}</h1>

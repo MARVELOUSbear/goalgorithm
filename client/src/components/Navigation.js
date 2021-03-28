@@ -7,11 +7,15 @@ function Navigation() {
   const history = useHistory();
   const [userName, setUserName] = useState(null);
 
+  const handleLogOut = async () => {
+    localStorage.removeItem('current_user');
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('current_user');
     if (token) {
       const getUserInfo = async () => {
-        const res = await fetch('./currentUser?id=' + token);
+        const res = await fetch('/currentUser?id=' + token);
         const currentUser = await res.json();
 
         setUserName(currentUser.username);
@@ -81,7 +85,7 @@ function Navigation() {
                 </a>
               </li>
               <li className="nav-item">
-                <form action="/logout" method="POST">
+                <form onSubmit={handleLogOut}>
                   <input
                     className="btn btn-block btn-danger"
                     type="submit"

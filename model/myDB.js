@@ -50,14 +50,30 @@ module.exports = {
       client.close();
     }
   },
-  getAllArticles: async () => {
+  getArticles: async (start, itemPerPage) => {
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
       await client.connect();
       const db = client.db('goalgorithm');
       const articles = db.collection('article');
-      const allArticles = await articles.find({}).toArray();
+      const allArticles = await articles
+        .find({})
+        .skip(parseInt(start))
+        .limit(parseInt(itemPerPage))
+        .toArray();
       return allArticles;
+    } finally {
+      client.close();
+    }
+  },
+  getArticlesCount: async () => {
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    try {
+      await client.connect();
+      const db = client.db('goalgorithm');
+      const articles = db.collection('article');
+      const count = await articles.find({}).count();
+      return count;
     } finally {
       client.close();
     }

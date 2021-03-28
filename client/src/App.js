@@ -26,7 +26,7 @@ function App() {
           <TestConnection />
         </Route>
         <Route path="/allArticles">
-          <ArticleLists />
+          <ArticleLists perPage={2} />
         </Route>
         <Route path="/articles">
           <ArticleDetail />

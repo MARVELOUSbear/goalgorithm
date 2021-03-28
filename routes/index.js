@@ -64,10 +64,23 @@ router.get('/currentUser', async (req, res) => {
 });
 
 router.get('/allArticles', async (req, res) => {
+  console.log(req.query);
+  const { start, itemPerPage } = req.query;
   try {
-    const articles = await goalgorithmDB.getAllArticles();
+    const articles = await goalgorithmDB.getArticles(start, itemPerPage);
     console.log(articles);
     res.json(articles);
+  } catch (err) {
+    console.log('something wtong');
+    res.send(err);
+  }
+});
+
+router.get('/articlesCount', async (req, res) => {
+  try {
+    const count = await goalgorithmDB.getArticlesCount();
+    console.log(count);
+    res.json(count);
   } catch (err) {
     res.send(err);
   }

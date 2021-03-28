@@ -39,7 +39,7 @@ function Login() {
       .then((data) => {
         if (data.status === 'verified') {
           localStorage.setItem('current_user', data.user_id);
-          history.push('/testConnection');
+          history.push('/allArticles');
         } else if (data.status === 'notMatch') {
           Swal.fire('Oops...', 'Wrong Password!', 'error');
         } else {

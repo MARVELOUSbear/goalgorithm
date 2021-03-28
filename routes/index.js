@@ -63,4 +63,18 @@ router.get('/currentUser', async (req, res) => {
   }
 });
 
+router.get('/allArticles', async (req, res) => {
+  try {
+    const articles = await goalgorithmDB.getAllArticles();
+    console.log(articles);
+    res.json(articles);
+  } catch (err) {
+    res.send(err);
+  }
+});
+// router.get('/articles:id', async (req, res) => {
+//   console.log(req.body);
+
+// });
+
 module.exports = router;

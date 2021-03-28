@@ -12,7 +12,7 @@ function ArticleLists() {
   const history = useHistory();
   useEffect(() => {
     const getAllArticles = async () => {
-      const resRaw = await fetch('./allArticles');
+      const resRaw = await fetch('/allArticles');
       const res = await resRaw.json();
       setArticles(res);
     };
@@ -28,12 +28,9 @@ function ArticleLists() {
     }
   }, []);
 
-  //   const viewArticle = (id) => {
-  //     history.push({
-  //       pathname: '/articles/' + id,
-  //       state: id,
-  //     });
-  //   };
+  const viewArticle = (id) => {
+    history.push('/articles/' + id, id);
+  };
 
   const renderArticle = (article) => {
     return (
@@ -43,7 +40,7 @@ function ArticleLists() {
         description={article.description}
         onView={() => {
           console.log(article._id);
-          //   viewArticle(article._id);
+          viewArticle(article._id);
         }}
       />
     );

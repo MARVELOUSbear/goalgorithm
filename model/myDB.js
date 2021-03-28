@@ -62,4 +62,18 @@ module.exports = {
       client.close();
     }
   },
+  getArticleById: async (articleID) => {
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    try {
+      await client.connect();
+      const db = client.db('goalgorithm');
+      const articles = db.collection('article');
+      const articleFound = await articles.findOne({
+        _id: ObjectId(articleID),
+      });
+      return articleFound;
+    } finally {
+      client.close();
+    }
+  },
 };

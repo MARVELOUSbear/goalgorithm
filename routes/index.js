@@ -72,9 +72,16 @@ router.get('/allArticles', async (req, res) => {
     res.send(err);
   }
 });
-// router.get('/articles:id', async (req, res) => {
-//   console.log(req.body);
-
-// });
+router.get('/articles/:id', async (req, res) => {
+  console.log(req.params.id);
+  const articleId = req.params.id;
+  try {
+    const article = await goalgorithmDB.getArticleById(articleId);
+    console.log(article);
+    res.json(article);
+  } catch (err) {
+    res.send(err);
+  }
+});
 
 module.exports = router;

@@ -35,6 +35,9 @@ function App() {
         <Route path="/newArticle">
           <NewArticle />
         </Route>
+        <Route path="/">
+          <Login />
+        </Route>
       </Switch>
     </Router>
   );

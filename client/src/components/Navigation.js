@@ -65,7 +65,7 @@ function Navigation() {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Dropdown
+                More Actions
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>

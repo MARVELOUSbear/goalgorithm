@@ -8,8 +8,9 @@ import ReactMarkdown from 'react-markdown';
 import MultiSelect from 'react-multi-select-component';
 import './NewArticle.css';
 
-function NewArticle({ perPage }) {
+function NewArticle() {
   const [currentUser, setCurrentUser] = useState(null);
+
   const [selected, setSelected] = useState([]);
   const history = useHistory();
   const [newArticleFormData, setNewArticleFormData] = useState({
@@ -17,6 +18,8 @@ function NewArticle({ perPage }) {
     tags: [],
     description: '',
     content: '',
+    user_id: '',
+    user_name: '',
   });
   const onChangeEventListener = (e) => {
     console.log(newArticleFormData);
@@ -26,10 +29,23 @@ function NewArticle({ perPage }) {
     });
   };
 
+  const getUserInfo = async (token) => {
+    const res = await fetch('/currentUser?id=' + token);
+    const userInfo = await res.json();
+    console.log('get user info');
+    console.log(userInfo);
+    setNewArticleFormData({
+      ...newArticleFormData,
+      user_id: userInfo._id,
+      user_name: userInfo.username,
+    });
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('current_user');
     if (token) {
-      setCurrentUser(token);
+      console.log(token);
+      getUserInfo(token);
     } else {
       history.push('/login');
     }
@@ -63,7 +79,11 @@ function NewArticle({ perPage }) {
       .then((data) => {
         if (data.status) {
           console.log(data.status);
-
+          Swal.fire({
+            icon: 'success',
+            title: 'Tada',
+            text: 'Successfully created an article!',
+          });
           history.push('/allArticles');
         } else {
           console.log('Something wrong');

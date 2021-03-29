@@ -105,6 +105,8 @@ module.exports = {
         description: article.description,
         content: article.content,
         votes: 0,
+        user_id: article.user_id,
+        user_name: article.user_name,
         created_at: new Date(),
         updated_at: new Date(),
       });

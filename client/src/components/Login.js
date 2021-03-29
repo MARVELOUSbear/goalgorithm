@@ -7,6 +7,8 @@ import Input from './Input';
 
 function Login() {
   const history = useHistory();
+  const [currentUser, setCurrentUser] = useState(null);
+
   const [loginFormData, setLoginFormData] = useState({
     email: '',
     password: '',
@@ -19,7 +21,12 @@ function Login() {
     });
   };
 
-  const checkLoginFormData = () => {};
+  useEffect(() => {
+    const token = localStorage.getItem('current_user');
+    if (token) {
+      history.push('/allArticles');
+    }
+  }, []);
 
   const submitLoginForm = (e) => {
     e.preventDefault();
@@ -38,6 +45,11 @@ function Login() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 'verified') {
+          Swal.fire({
+            icon: 'success',
+            title: 'Tada',
+            text: 'Login Successfully!',
+          });
           localStorage.setItem('current_user', data.user_id);
           history.push('/allArticles');
         } else if (data.status === 'notMatch') {

@@ -92,4 +92,25 @@ module.exports = {
       client.close();
     }
   },
+  addArticle: async (article) => {
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    try {
+      await client.connect();
+      const db = client.db('goalgorithm');
+      const articles = db.collection('article');
+
+      const x = await articles.insertOne({
+        title: article.title,
+        tags: article.tags,
+        description: article.description,
+        content: article.content,
+        votes: 0,
+        created_at: new Date(),
+        updated_at: new Date(),
+      });
+      return x.insertedId;
+    } finally {
+      client.close();
+    }
+  },
 };

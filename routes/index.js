@@ -97,4 +97,18 @@ router.get('/articles/:id', async (req, res) => {
   }
 });
 
+router.post('/articles/new', async (req, res) => {
+  console.log(req.body);
+  const newArticle = req.body;
+  try {
+    const articleId = await goalgorithmDB.addArticle(newArticle);
+    console.log(articleId);
+    res.send({ status: true, articleId: articleId });
+  } catch {
+    res.send({
+      status: false,
+    });
+  }
+});
+
 module.exports = router;

@@ -4,12 +4,12 @@ import { useHistory, Redirect } from 'react-router';
 import Swal from 'sweetalert2';
 import './Tag.css';
 
-function Tag({ color, tag }) {
+function Tag({ color, tag, onClick }) {
   const style = {
     backgroundColor: color,
   };
   return (
-    <button className="tags me-1" style={style}>
+    <button className="tags me-1" style={style} onClick={onClick}>
       {tag}
     </button>
   );

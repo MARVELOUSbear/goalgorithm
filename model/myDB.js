@@ -50,14 +50,19 @@ module.exports = {
       client.close();
     }
   },
-  getArticles: async (start, itemPerPage) => {
+  getArticles: async (start, itemPerPage, tagFilter) => {
+    let filter =
+      tagFilter === '' || tagFilter === undefined
+        ? {}
+        : { 'tags.name': tagFilter };
+    console.log(filter);
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
       await client.connect();
       const db = client.db('goalgorithm');
       const articles = db.collection('article');
       const allArticles = await articles
-        .find({})
+        .find(filter)
         .skip(parseInt(start))
         .limit(parseInt(itemPerPage))
         .toArray();
@@ -66,13 +71,47 @@ module.exports = {
       client.close();
     }
   },
-  getArticlesCount: async () => {
+  getUserArticles: async (start, itemPerPage, userId) => {
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
       await client.connect();
       const db = client.db('goalgorithm');
       const articles = db.collection('article');
-      const count = await articles.find({}).count();
+      const userArticles = await articles
+        .find({ user_id: userId })
+        .skip(parseInt(start))
+        .limit(parseInt(itemPerPage))
+        .toArray();
+      return userArticles;
+    } finally {
+      client.close();
+    }
+  },
+  getArticlesCount: async (tagFilter) => {
+    let filter =
+      tagFilter === '' || tagFilter === undefined
+        ? {}
+        : { 'tags.name': tagFilter };
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    try {
+      await client.connect();
+      const db = client.db('goalgorithm');
+      const articles = db.collection('article');
+      const count = await articles.find(filter).count();
+      console.log(count);
+      return count;
+    } finally {
+      client.close();
+    }
+  },
+  getUserArticlesCount: async (userId) => {
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    try {
+      await client.connect();
+      const db = client.db('goalgorithm');
+      const articles = db.collection('article');
+      const count = await articles.find({ user_id: userId }).count();
+      console.log(count);
       return count;
     } finally {
       client.close();
@@ -92,6 +131,7 @@ module.exports = {
       client.close();
     }
   },
+
   addArticle: async (article) => {
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {

@@ -27,7 +27,10 @@ function App() {
           <TestConnection />
         </Route>
         <Route path="/allArticles">
-          <ArticleLists perPage={2} />
+          <ArticleLists perPage={2} domain="all" />
+        </Route>
+        <Route path="/myArticles">
+          <ArticleLists perPage={2} domain="personal" />
         </Route>
         <Route path="/articles">
           <ArticleDetail />

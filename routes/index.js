@@ -65,10 +65,13 @@ router.get('/currentUser', async (req, res) => {
 
 router.get('/allArticles', async (req, res) => {
   console.log(req.query);
-  const { start, itemPerPage } = req.query;
+  const { start, itemPerPage, tagFilter } = req.query;
   try {
-    const articles = await goalgorithmDB.getArticles(start, itemPerPage);
-    console.log(articles);
+    const articles = await goalgorithmDB.getArticles(
+      start,
+      itemPerPage,
+      tagFilter
+    );
     res.json(articles);
   } catch (err) {
     console.log('something wtong');
@@ -76,15 +79,43 @@ router.get('/allArticles', async (req, res) => {
   }
 });
 
-router.get('/articlesCount', async (req, res) => {
+router.get('/myArticles', async (req, res) => {
+  const { start, itemPerPage, userId, tagFilter } = req.query;
   try {
-    const count = await goalgorithmDB.getArticlesCount();
-    console.log(count);
+    const articles = await goalgorithmDB.getUserArticles(
+      start,
+      itemPerPage,
+      userId
+    );
+    res.json(articles);
+  } catch (err) {
+    console.log('something wrong');
+    res.send(err);
+  }
+});
+
+router.get('/articlesCount', async (req, res) => {
+  const { tagFilter } = req.query;
+  try {
+    const count = await goalgorithmDB.getArticlesCount(tagFilter);
     res.json(count);
   } catch (err) {
     res.send(err);
   }
 });
+
+router.get('/myArticlesCount', async (req, res) => {
+  const { userId } = req.query;
+  console.log(userId);
+  try {
+    const count = await goalgorithmDB.getUserArticlesCount(userId);
+
+    res.json(count);
+  } catch (err) {
+    res.send(err);
+  }
+});
+
 router.get('/articles/:id', async (req, res) => {
   console.log(req.params.id);
   const articleId = req.params.id;

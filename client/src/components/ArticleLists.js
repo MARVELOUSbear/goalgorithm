@@ -79,7 +79,7 @@ function ArticleLists({ perPage }) {
         <h1>All Articles</h1>
         {renderArticles()}
       </div>
-      <div className="container">
+      <div className="container mt-5">
         <div className="row justify-content-center ">
           <div className="col-lg-3 "></div>
           <div className="col-lg-3">

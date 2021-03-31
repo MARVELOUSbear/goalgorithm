@@ -85,7 +85,8 @@ router.get('/myArticles', async (req, res) => {
     const articles = await goalgorithmDB.getUserArticles(
       start,
       itemPerPage,
-      userId
+      userId,
+      tagFilter
     );
     res.json(articles);
   } catch (err) {
@@ -105,10 +106,10 @@ router.get('/articlesCount', async (req, res) => {
 });
 
 router.get('/myArticlesCount', async (req, res) => {
-  const { userId } = req.query;
+  const { userId, tagFilter } = req.query;
   console.log(userId);
   try {
-    const count = await goalgorithmDB.getUserArticlesCount(userId);
+    const count = await goalgorithmDB.getUserArticlesCount(userId, tagFilter);
 
     res.json(count);
   } catch (err) {

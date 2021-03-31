@@ -51,7 +51,7 @@ function Login() {
             text: 'Login Successfully!',
           });
           localStorage.setItem('current_user', data.user_id);
-          history.push('/allArticles');
+          history.push('/Articles');
         } else if (data.status === 'notMatch') {
           Swal.fire('Oops...', 'Wrong Password!', 'error');
         } else {

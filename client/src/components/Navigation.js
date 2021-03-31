@@ -9,6 +9,7 @@ function Navigation() {
 
   const handleLogOut = async () => {
     localStorage.removeItem('current_user');
+    history.push('/login');
   };
 
   useEffect(() => {
@@ -28,7 +29,7 @@ function Navigation() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light mb-5">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/Articles">
           Goalgorithm
         </a>
         <button
@@ -50,7 +51,7 @@ function Navigation() {
               <a
                 className="nav-link active"
                 aria-current="page"
-                href="/allArticles"
+                href="/Articles"
               >
                 Home
               </a>
@@ -74,7 +75,7 @@ function Navigation() {
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/myArticles">
+                  <a className="dropdown-item" href="/allMyArticles">
                     My Articles
                   </a>
                 </li>

@@ -71,14 +71,18 @@ module.exports = {
       client.close();
     }
   },
-  getUserArticles: async (start, itemPerPage, userId) => {
+  getUserArticles: async (start, itemPerPage, userId, tagFilter) => {
+    let filter =
+      tagFilter === '' || tagFilter === undefined
+        ? { user_id: userId }
+        : { 'tags.name': tagFilter, user_id: userId };
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
       await client.connect();
       const db = client.db('goalgorithm');
       const articles = db.collection('article');
       const userArticles = await articles
-        .find({ user_id: userId })
+        .find(filter)
         .skip(parseInt(start))
         .limit(parseInt(itemPerPage))
         .toArray();
@@ -104,13 +108,17 @@ module.exports = {
       client.close();
     }
   },
-  getUserArticlesCount: async (userId) => {
+  getUserArticlesCount: async (userId, tagFilter) => {
+    let filter =
+      tagFilter === '' || tagFilter === undefined
+        ? { user_id: userId }
+        : { 'tags.name': tagFilter, user_id: userId };
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
       await client.connect();
       const db = client.db('goalgorithm');
       const articles = db.collection('article');
-      const count = await articles.find({ user_id: userId }).count();
+      const count = await articles.find(filter).count();
       console.log(count);
       return count;
     } finally {

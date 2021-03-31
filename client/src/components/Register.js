@@ -47,7 +47,7 @@ function Register() {
       .then((data) => {
         if (data.status) {
           localStorage.setItem('current_user', data.user_id);
-          history.push('/testConnection');
+          history.push('/Articles');
         } else {
           console.log('Something wrong');
         }

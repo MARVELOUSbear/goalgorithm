@@ -35,7 +35,9 @@ function ArticleLists({ perPage, domain }) {
         '&itemPerPage=' +
         itemPerPage +
         '&userId=' +
-        currentUser
+        currentUser +
+        '&tagFilter=' +
+        tagFilter
     );
     const res = await resRaw.json();
     setArticles(res);
@@ -48,7 +50,9 @@ function ArticleLists({ perPage, domain }) {
   };
 
   const getMyArticleCount = async (tagFilter) => {
-    const resRaw = await fetch('/myArticlesCount?userId=' + currentUser);
+    const resRaw = await fetch(
+      '/myArticlesCount?userId=' + currentUser + '&tagFilter=' + tagFilter
+    );
     const count = await resRaw.json();
     console.log('my articlr coutn ', count);
     setArticlesCount(count);
@@ -75,7 +79,7 @@ function ArticleLists({ perPage, domain }) {
   }, [currentUser, tagFilter]);
 
   const viewArticle = (id) => {
-    history.push('/articles/' + id, id);
+    history.push('/articleDetails/', id);
   };
 
   const renderArticle = (article) => {

@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import Navigation from './Navigation';
 import Tag from './Tag';
 import ReactMarkdown from 'react-markdown';
+import Toggle from 'react-toggle';
+import 'react-toggle/style.css';
 import './ArticleDetail.css';
 
 function ArticleDetail(props) {
@@ -57,6 +59,17 @@ function ArticleDetail(props) {
               {new Date(article.created_at).toString().substring(0, 21)}
             </cite>
           </Card.Footer>
+          <label>
+            <h3 className="votes">
+              <span>❤️</span>
+              {article.votes}
+            </h3>
+            <Toggle
+              defaultChecked={false}
+              className="custom-classname"
+              onChange={() => {}}
+            />
+          </label>
         </Card>
         <h1></h1>
       </div>

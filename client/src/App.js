@@ -26,13 +26,13 @@ function App() {
         <Route path="/testConnection">
           <TestConnection />
         </Route>
-        <Route path="/allArticles">
+        <Route path="/Articles">
           <ArticleLists perPage={2} domain="all" />
         </Route>
-        <Route path="/myArticles">
+        <Route path="/AllMyArticles">
           <ArticleLists perPage={2} domain="personal" />
         </Route>
-        <Route path="/articles">
+        <Route path="/articleDetails">
           <ArticleDetail />
         </Route>
         <Route path="/newArticle">

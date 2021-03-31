@@ -55,6 +55,7 @@ function NewArticle() {
     const tags = selected.map((tag) => {
       return colors[tag.value];
     });
+    console.log(tags);
     setNewArticleFormData({
       ...newArticleFormData,
       tags: tags,
@@ -108,7 +109,7 @@ function NewArticle() {
     SQL: { color: '#822659', name: 'SQL' },
     'Sliding Window': { color: '#e4bad4', name: 'Sliding Window' },
     JavaScript: { color: '#433520', name: 'JavaScript' },
-    'C++': { color: '#025955', name: 'C++' },
+    'Computer System': { color: '#025955', name: 'Computer System' },
     Python: { color: '#00917c', name: 'Python' },
     'Programming Language': { color: '#85603f', name: 'Programming Language' },
   };
@@ -135,7 +136,7 @@ function NewArticle() {
       value: 'Sliding Window',
     },
     { label: 'JavaScript', value: 'JavaScript' },
-    { label: 'C++', value: 'C++' },
+    { label: 'Computer System', value: 'Computer System' },
     { label: 'Python', value: 'Python' },
     {
       label: 'Programming Language',

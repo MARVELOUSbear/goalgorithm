@@ -24,7 +24,7 @@ function Login() {
   useEffect(() => {
     const token = localStorage.getItem('current_user');
     if (token) {
-      history.push('/allArticles');
+      history.push('/Articles');
     }
   }, []);
 

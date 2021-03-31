@@ -85,7 +85,7 @@ function NewArticle() {
             title: 'Tada',
             text: 'Successfully created an article!',
           });
-          history.push('/allArticles');
+          history.push('/Articles');
         } else {
           console.log('Something wrong');
         }

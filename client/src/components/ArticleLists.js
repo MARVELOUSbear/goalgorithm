@@ -92,6 +92,7 @@ function ArticleLists({ perPage, domain }) {
             setTagFilter(tag.name);
           };
         }}
+        editable={article.user_id === currentUser}
       />
     );
   };

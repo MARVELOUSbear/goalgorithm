@@ -211,7 +211,7 @@ module.exports = {
       client.close();
     }
   },
-  updateArticle: async (article) => {
+  updateArticleVotes: async (article) => {
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
       // console.log(article);
@@ -225,6 +225,32 @@ module.exports = {
         {
           $set: {
             votes: article.votes,
+          },
+        }
+      );
+    } finally {
+      client.close();
+    }
+  },
+
+  updateArticle: async (article) => {
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    try {
+      // console.log(article);
+      await client.connect();
+      const db = client.db('goalgorithm');
+      const articles = db.collection('article');
+      await articles.updateOne(
+        {
+          _id: ObjectId(article._id),
+        },
+        {
+          $set: {
+            title: article.title,
+            description: article.description,
+            tags: article.tags,
+            content: article.content,
+            updated_at: new Date(),
           },
         }
       );

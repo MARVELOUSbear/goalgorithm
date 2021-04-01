@@ -82,6 +82,10 @@ function ArticleLists({ perPage, domain }) {
     history.push('/articleDetails/', id);
   };
 
+  const EditArticle = (id) => {
+    history.push('/editArticle/', id);
+  };
+
   const renderArticle = (article) => {
     return (
       <Article
@@ -97,6 +101,9 @@ function ArticleLists({ perPage, domain }) {
           };
         }}
         editable={article.user_id === currentUser}
+        onClickEdit={() => {
+          EditArticle(article._id);
+        }}
       />
     );
   };

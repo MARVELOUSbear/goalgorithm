@@ -6,7 +6,15 @@ import './Article.css';
 import Tag from './Tag';
 import Description from './Description';
 
-function Article({ tags, title, description, onView, onClickTag, editable }) {
+function Article({
+  tags,
+  title,
+  description,
+  onView,
+  onClickTag,
+  editable,
+  onClickEdit,
+}) {
   const renderTag = (color, name, onClick) => (
     <Tag color={color} tag={name} onClick={onClick} />
   );
@@ -34,7 +42,7 @@ function Article({ tags, title, description, onView, onClickTag, editable }) {
 
             {editable ? (
               <div className="col-3">
-                <Button variant="outline-info me-2" onClick={onView}>
+                <Button variant="outline-info me-2" onClick={onClickEdit}>
                   Edit
                 </Button>
                 <Button variant="outline-danger" onClick={onView}>

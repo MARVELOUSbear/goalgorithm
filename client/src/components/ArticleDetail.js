@@ -53,7 +53,7 @@ function ArticleDetail(props) {
   }, [article]);
 
   const updateArticleVotes = async () => {
-    fetch('/updateArticle', {
+    fetch('/updateArticleVotes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

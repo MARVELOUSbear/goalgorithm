@@ -143,6 +143,17 @@ router.post('/articles/new', async (req, res) => {
   }
 });
 
+router.post('/updateArticleVotes', async (req, res) => {
+  const newArticle = req.body;
+
+  try {
+    await goalgorithmDB.updateArticleVotes(newArticle);
+    res.send({ status: true });
+  } catch (err) {
+    res.send(err);
+  }
+});
+
 router.post('/updateArticle', async (req, res) => {
   const newArticle = req.body;
   console.log(newArticle);
@@ -155,17 +166,6 @@ router.post('/updateArticle', async (req, res) => {
   }
 });
 
-router.post('/userUpvoted', async (req, res) => {
-  const data = req.body;
-  console.log(data);
-
-  // try {
-  //   await goalgorithmDB.check(new_user, req.session.user_id);
-  //   res.send({ status: true });
-  // } catch (err) {
-  //   res.send(err);
-  // }
-});
 router.get('/upvoteLists', async (req, res) => {
   const { userId, articleId } = req.query;
   console.log(req.query);

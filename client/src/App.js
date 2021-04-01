@@ -12,6 +12,7 @@ import Register from './components/Register';
 import ArticleLists from './components/ArticleLists';
 import ArticleDetail from './components/ArticleDetail';
 import NewArticle from './components/NewArticle';
+import EditArticle from './components/EditArticle';
 
 function App() {
   return (
@@ -37,6 +38,9 @@ function App() {
         </Route>
         <Route path="/newArticle">
           <NewArticle />
+        </Route>
+        <Route path="/editArticle">
+          <EditArticle />
         </Route>
         <Route path="/">
           <Login />

@@ -106,21 +106,54 @@ function ArticleLists({ perPage, domain }) {
   };
 
   const deleteArticle = async (id) => {
-    fetch('/deleteOneArticle', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger',
       },
-      body: JSON.stringify({
-        articleId: id,
-      }),
-    })
-      .then((res) => res.json())
-      .then(() => {
-        window.location.reload();
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true,
       })
-      .catch(() => {
-        console.log('Something wrong');
+      .then((result) => {
+        if (result.isConfirmed) {
+          fetch('/deleteOneArticle', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              articleId: id,
+            }),
+          })
+            .then((res) => res.json())
+            .then(() => {
+              window.location.reload();
+            })
+            .catch(() => {
+              console.log('Something wrong');
+            });
+          swalWithBootstrapButtons.fire(
+            'Deleted!',
+            'Your article has been deleted.',
+            'success'
+          );
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your article is safe :)',
+            'error'
+          );
+        }
       });
   };
 

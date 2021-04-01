@@ -122,7 +122,7 @@ router.get('/articles/:id', async (req, res) => {
   const articleId = req.params.id;
   try {
     const article = await goalgorithmDB.getArticleById(articleId);
-    console.log(article);
+    // console.log(article);
     res.json(article);
   } catch (err) {
     res.send(err);
@@ -134,12 +134,75 @@ router.post('/articles/new', async (req, res) => {
   const newArticle = req.body;
   try {
     const articleId = await goalgorithmDB.addArticle(newArticle);
-    console.log(articleId);
+    // console.log(articleId);
     res.send({ status: true, articleId: articleId });
   } catch {
     res.send({
       status: false,
     });
+  }
+});
+
+router.post('/updateArticle', async (req, res) => {
+  const newArticle = req.body;
+  console.log(newArticle);
+
+  try {
+    await goalgorithmDB.updateArticle(newArticle);
+    res.send({ status: true });
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+router.post('/userUpvoted', async (req, res) => {
+  const data = req.body;
+  console.log(data);
+
+  // try {
+  //   await goalgorithmDB.check(new_user, req.session.user_id);
+  //   res.send({ status: true });
+  // } catch (err) {
+  //   res.send(err);
+  // }
+});
+router.get('/upvoteLists', async (req, res) => {
+  const { userId, articleId } = req.query;
+  console.log(req.query);
+
+  try {
+    const found = await goalgorithmDB.getUserUpvoteLists(userId, articleId);
+    if (found) {
+      console.log('send true');
+      res.send({ status: true });
+    } else {
+      res.send({ status: false });
+    }
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+router.post('/removeUpvoteLists', async (req, res) => {
+  const { userId, articleId } = req.body;
+  console.log(req.body);
+
+  try {
+    await goalgorithmDB.removeUpvoteRecord(userId, articleId);
+    res.send({ status: true });
+  } catch (err) {
+    res.send(err);
+  }
+});
+router.post('/upvoteLists', async (req, res) => {
+  const { userId, articleId } = req.body;
+  console.log(req.body);
+
+  try {
+    await goalgorithmDB.addUpvoteRecord(userId, articleId);
+    res.send({ status: true });
+  } catch (err) {
+    res.send(err);
   }
 });
 

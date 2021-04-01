@@ -55,7 +55,7 @@ module.exports = {
       tagFilter === '' || tagFilter === undefined
         ? {}
         : { 'tags.name': tagFilter };
-    console.log(filter);
+
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
       await client.connect();
@@ -102,7 +102,7 @@ module.exports = {
       const db = client.db('goalgorithm');
       const articles = db.collection('article');
       const count = await articles.find(filter).count();
-      console.log(count);
+
       return count;
     } finally {
       client.close();
@@ -119,8 +119,56 @@ module.exports = {
       const db = client.db('goalgorithm');
       const articles = db.collection('article');
       const count = await articles.find(filter).count();
-      console.log(count);
+
       return count;
+    } finally {
+      client.close();
+    }
+  },
+  getUserUpvoteLists: async (userId, articleId) => {
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    try {
+      await client.connect();
+      const db = client.db('goalgorithm');
+      const upvoteLists = db.collection('upvoteList');
+      const res = await upvoteLists
+        .find({ user_id: userId, article_id: articleId })
+        .count();
+
+      return res;
+    } finally {
+      client.close();
+    }
+  },
+  addUpvoteRecord: async (userId, articleId) => {
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    try {
+      await client.connect();
+      const db = client.db('goalgorithm');
+      const upvoteLists = db.collection('upvoteList');
+      const x = await upvoteLists.insertOne({
+        user_id: userId,
+        article_id: articleId,
+      });
+
+      return x.insertedId;
+    } finally {
+      client.close();
+    }
+  },
+
+  removeUpvoteRecord: async (userId, articleId) => {
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    try {
+      await client.connect();
+      const db = client.db('goalgorithm');
+      const upvoteLists = db.collection('upvoteList');
+      const x = await upvoteLists.deleteOne({
+        user_id: userId,
+        article_id: articleId,
+      });
+
+      return x;
     } finally {
       client.close();
     }
@@ -159,6 +207,27 @@ module.exports = {
         updated_at: new Date(),
       });
       return x.insertedId;
+    } finally {
+      client.close();
+    }
+  },
+  updateArticle: async (article) => {
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    try {
+      // console.log(article);
+      await client.connect();
+      const db = client.db('goalgorithm');
+      const articles = db.collection('article');
+      await articles.updateOne(
+        {
+          _id: ObjectId(article._id),
+        },
+        {
+          $set: {
+            votes: article.votes,
+          },
+        }
+      );
     } finally {
       client.close();
     }

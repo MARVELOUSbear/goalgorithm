@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Card } from 'react-bootstrap';
 import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -11,6 +11,7 @@ import './ArticleDetail.css';
 
 function ArticleDetail(props) {
   const location = useLocation();
+  const resettingRef = useRef(false);
 
   const articleID = location.state;
   const [article, setArticle] = useState({
@@ -18,16 +19,110 @@ function ArticleDetail(props) {
     tags: [],
     description: '',
     content: '',
+    votes: 0,
   });
+  const [upvoted, setUpvoted] = useState(false);
+  const [trigger, setTrigger] = useState(false);
+  const getArticle = async () => {
+    const resRaw = await fetch('/articles/' + articleID);
+    const res = await resRaw.json();
+    console.log(res);
+    setArticle(res);
+  };
   useEffect(() => {
-    const getArticle = async () => {
-      const resRaw = await fetch('/articles/' + articleID);
-      const res = await resRaw.json();
-      console.log(res);
-      setArticle(res);
-    };
     getArticle();
   }, []);
+
+  useEffect(() => {
+    checkIfUpvoted();
+    console.log(upvoted);
+  }, []);
+  useEffect(() => {
+    if (resettingRef.current) {
+      resettingRef.current = false;
+      if (upvoted) {
+        setUpvoted(false);
+        RemoveUpvoteLists();
+        updateArticleVotes();
+      } else {
+        setUpvoted(true);
+        insertUpvoteLists();
+        updateArticleVotes();
+      }
+    }
+  }, [article]);
+
+  const updateArticleVotes = async () => {
+    fetch('/updateArticle', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(article),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Tada',
+          text: 'Updated!',
+        });
+      })
+      .catch(() => {
+        console.log('Something wrong');
+      });
+  };
+
+  const checkIfUpvoted = async () => {
+    const resRaw = await fetch(
+      '/upvoteLists?userId=' +
+        localStorage.getItem('current_user') +
+        '&articleId=' +
+        articleID
+    );
+    const res = await resRaw.json();
+
+    setUpvoted(res.status);
+  };
+
+  const RemoveUpvoteLists = async () => {
+    fetch('/removeUpvoteLists', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: localStorage.getItem('current_user'),
+        articleId: articleID,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch(() => {
+        console.log('Something wrong');
+      });
+  };
+  const insertUpvoteLists = async () => {
+    fetch('/upvoteLists', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: localStorage.getItem('current_user'),
+        articleId: articleID,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch(() => {
+        console.log('Something wrong');
+      });
+  };
 
   const renderTags = () => {
     const tags = article.tags;
@@ -65,9 +160,29 @@ function ArticleDetail(props) {
               {article.votes}
             </h3>
             <Toggle
-              defaultChecked={false}
+              checked={upvoted}
               className="custom-classname"
-              onChange={() => {}}
+              onChange={() => {
+                if (upvoted) {
+                  resettingRef.current = true;
+                  setArticle({
+                    ...article,
+                    votes: article.votes - 1,
+                  });
+
+                  //Swal
+                } else {
+                  resettingRef.current = true;
+                  setArticle({
+                    ...article,
+                    votes: article.votes + 1,
+                  });
+                  console.log(article);
+
+                  //Swal
+                }
+                console.log('toggled');
+              }}
             />
           </label>
         </Card>

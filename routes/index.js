@@ -65,12 +65,13 @@ router.get('/currentUser', async (req, res) => {
 
 router.get('/allArticles', async (req, res) => {
   console.log(req.query);
-  const { start, itemPerPage, tagFilter } = req.query;
+  const { start, itemPerPage, tagFilter, searchFilter } = req.query;
   try {
     const articles = await goalgorithmDB.getArticles(
       start,
       itemPerPage,
-      tagFilter
+      tagFilter,
+      searchFilter
     );
     res.json(articles);
   } catch (err) {
@@ -80,13 +81,14 @@ router.get('/allArticles', async (req, res) => {
 });
 
 router.get('/myArticles', async (req, res) => {
-  const { start, itemPerPage, userId, tagFilter } = req.query;
+  const { start, itemPerPage, userId, tagFilter, searchFilter } = req.query;
   try {
     const articles = await goalgorithmDB.getUserArticles(
       start,
       itemPerPage,
       userId,
-      tagFilter
+      tagFilter,
+      searchFilter
     );
     res.json(articles);
   } catch (err) {
@@ -96,9 +98,9 @@ router.get('/myArticles', async (req, res) => {
 });
 
 router.get('/articlesCount', async (req, res) => {
-  const { tagFilter } = req.query;
+  const { tagFilter, searchFilter } = req.query;
   try {
-    const count = await goalgorithmDB.getArticlesCount(tagFilter);
+    const count = await goalgorithmDB.getArticlesCount(tagFilter, searchFilter);
     res.json(count);
   } catch (err) {
     res.send(err);
@@ -106,10 +108,15 @@ router.get('/articlesCount', async (req, res) => {
 });
 
 router.get('/myArticlesCount', async (req, res) => {
-  const { userId, tagFilter } = req.query;
-  console.log(userId);
+  const { userId, tagFilter, searchFilter } = req.query;
+
+  console.log('why null', userId);
   try {
-    const count = await goalgorithmDB.getUserArticlesCount(userId, tagFilter);
+    const count = await goalgorithmDB.getUserArticlesCount(
+      userId,
+      tagFilter,
+      searchFilter
+    );
 
     res.json(count);
   } catch (err) {

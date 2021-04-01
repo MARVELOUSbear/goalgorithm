@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button';
 import { useHistory, Redirect } from 'react-router';
 import Swal from 'sweetalert2';
 import Pagination from 'react-js-pagination';
+import SearchField from 'react-search-field';
+
 import Article from './Article';
 import Navigation from './Navigation';
 import './ArticleLists.css';
@@ -11,24 +13,33 @@ function ArticleLists({ perPage, domain }) {
   const [articles, setArticles] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const [tagFilter, setTagFilter] = useState('');
+  const [searchTempFilter, setSearchTempFilter] = useState('');
+  const [searchFilter, setSearchFilter] = useState('');
   const [activePage, setActivePage] = useState(1);
   const [articlesCount, setArticlesCount] = useState(0);
 
   const history = useHistory();
-  const getAllArticles = async (start, itemPerPage, tagFilter) => {
+  const getAllArticles = async (
+    start,
+    itemPerPage,
+    tagFilter,
+    searchFilter
+  ) => {
     const resRaw = await fetch(
       '/allArticles?start=' +
         start +
         '&itemPerPage=' +
         itemPerPage +
         '&tagFilter=' +
-        tagFilter
+        tagFilter +
+        '&searchFilter=' +
+        searchFilter
     );
     const res = await resRaw.json();
     setArticles(res);
   };
 
-  const getMyArticles = async (start, itemPerPage, tagFilter) => {
+  const getMyArticles = async (start, itemPerPage, tagFilter, searchFilter) => {
     const resRaw = await fetch(
       '/myArticles?start=' +
         start +
@@ -37,21 +48,30 @@ function ArticleLists({ perPage, domain }) {
         '&userId=' +
         currentUser +
         '&tagFilter=' +
-        tagFilter
+        tagFilter +
+        '&searchFilter=' +
+        searchFilter
     );
     const res = await resRaw.json();
     setArticles(res);
   };
 
-  const getArticleCount = async (tagFilter) => {
-    const resRaw = await fetch('/articlesCount?tagFilter=' + tagFilter);
+  const getArticleCount = async (tagFilter, searchFilter) => {
+    const resRaw = await fetch(
+      '/articlesCount?tagFilter=' + tagFilter + '&searchFilter=' + searchFilter
+    );
     const count = await resRaw.json();
     setArticlesCount(count);
   };
 
-  const getMyArticleCount = async (tagFilter) => {
+  const getMyArticleCount = async (tagFilter, searchFilter) => {
     const resRaw = await fetch(
-      '/myArticlesCount?userId=' + currentUser + '&tagFilter=' + tagFilter
+      '/myArticlesCount?userId=' +
+        currentUser +
+        '&tagFilter=' +
+        tagFilter +
+        '&searchFilter=' +
+        searchFilter
     );
     const count = await resRaw.json();
     console.log('my articlr coutn ', count);
@@ -68,15 +88,14 @@ function ArticleLists({ perPage, domain }) {
   }, []);
 
   useEffect(() => {
-    console.log('set domain');
     if (domain === 'personal') {
-      getMyArticles(0, perPage, tagFilter);
-      getMyArticleCount(tagFilter);
+      getMyArticles(0, perPage, tagFilter, searchFilter);
+      getMyArticleCount(tagFilter, searchFilter);
     } else {
-      getAllArticles(0, perPage, tagFilter);
-      getArticleCount(tagFilter);
+      getAllArticles(0, perPage, tagFilter, searchFilter);
+      getArticleCount(tagFilter, searchFilter);
     }
-  }, [currentUser, tagFilter]);
+  }, [currentUser, tagFilter, searchFilter]);
 
   const viewArticle = (id) => {
     history.push('/articleDetails/', id);
@@ -139,15 +158,30 @@ function ArticleLists({ perPage, domain }) {
     setActivePage(pageNumber);
     const start = perPage * (pageNumber - 1);
     if (domain === 'personal') {
-      getMyArticles(start, perPage, tagFilter);
+      getMyArticles(start, perPage, tagFilter, searchFilter);
     } else {
-      getAllArticles(start, perPage, tagFilter);
+      getAllArticles(start, perPage, tagFilter, searchFilter);
     }
   };
 
   return (
     <>
       <Navigation />
+      <div className="container">
+        <div className="row justify-content-center my-3 ">
+          <div className="col-lg-3">
+            <SearchField
+              placeholder="Search item"
+              onChange={setSearchTempFilter}
+              onSearchClick={() => {
+                setSearchFilter(searchTempFilter);
+                // console.log(searchFilter);
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
       <div className="articlelists-container">
         <h1>All Articles</h1>
         {renderArticles()}

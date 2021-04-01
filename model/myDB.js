@@ -50,12 +50,21 @@ module.exports = {
       client.close();
     }
   },
-  getArticles: async (start, itemPerPage, tagFilter) => {
+  getArticles: async (start, itemPerPage, tagFilter, searchFilter) => {
     let filter =
       tagFilter === '' || tagFilter === undefined
         ? {}
         : { 'tags.name': tagFilter };
 
+    if (searchFilter !== '' && searchFilter !== undefined) {
+      filter = {
+        ...filter,
+        $or: [
+          { title: { $regex: searchFilter } },
+          { description: { $regex: searchFilter } },
+        ],
+      };
+    }
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
       await client.connect();
@@ -71,11 +80,26 @@ module.exports = {
       client.close();
     }
   },
-  getUserArticles: async (start, itemPerPage, userId, tagFilter) => {
+  getUserArticles: async (
+    start,
+    itemPerPage,
+    userId,
+    tagFilter,
+    searchFilter
+  ) => {
     let filter =
       tagFilter === '' || tagFilter === undefined
         ? { user_id: userId }
         : { 'tags.name': tagFilter, user_id: userId };
+    if (searchFilter !== '' && searchFilter !== undefined) {
+      filter = {
+        ...filter,
+        $or: [
+          { title: { $regex: searchFilter } },
+          { description: { $regex: searchFilter } },
+        ],
+      };
+    }
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
       await client.connect();
@@ -91,11 +115,20 @@ module.exports = {
       client.close();
     }
   },
-  getArticlesCount: async (tagFilter) => {
+  getArticlesCount: async (tagFilter, searchFilter) => {
     let filter =
       tagFilter === '' || tagFilter === undefined
         ? {}
         : { 'tags.name': tagFilter };
+    if (searchFilter !== '' && searchFilter !== undefined) {
+      filter = {
+        ...filter,
+        $or: [
+          { title: { $regex: searchFilter } },
+          { description: { $regex: searchFilter } },
+        ],
+      };
+    }
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
       await client.connect();
@@ -108,11 +141,20 @@ module.exports = {
       client.close();
     }
   },
-  getUserArticlesCount: async (userId, tagFilter) => {
+  getUserArticlesCount: async (userId, tagFilter, searchFilter) => {
     let filter =
       tagFilter === '' || tagFilter === undefined
         ? { user_id: userId }
         : { 'tags.name': tagFilter, user_id: userId };
+    if (searchFilter !== '' && searchFilter !== undefined) {
+      filter = {
+        ...filter,
+        $or: [
+          { title: { $regex: searchFilter } },
+          { description: { $regex: searchFilter } },
+        ],
+      };
+    }
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
       await client.connect();

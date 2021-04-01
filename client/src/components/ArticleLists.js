@@ -208,7 +208,9 @@ function ArticleLists({ perPage, domain }) {
               onChange={setSearchTempFilter}
               onSearchClick={() => {
                 setSearchFilter(searchTempFilter);
-                // console.log(searchFilter);
+              }}
+              onEnter={() => {
+                setSearchFilter(searchTempFilter);
               }}
             />
           </div>

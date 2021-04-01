@@ -14,6 +14,7 @@ function Article({
   onClickTag,
   editable,
   onClickEdit,
+  onClickDelete,
 }) {
   const renderTag = (color, name, onClick) => (
     <Tag color={color} tag={name} onClick={onClick} />
@@ -45,7 +46,7 @@ function Article({
                 <Button variant="outline-info me-2" onClick={onClickEdit}>
                   Edit
                 </Button>
-                <Button variant="outline-danger" onClick={onView}>
+                <Button variant="outline-danger" onClick={onClickDelete}>
                   Delete
                 </Button>
               </div>

@@ -166,6 +166,20 @@ router.post('/updateArticle', async (req, res) => {
   }
 });
 
+router.post('/deleteOneArticle', async (req, res) => {
+  const { articleId } = req.body;
+  console.log(articleId);
+
+  try {
+    await goalgorithmDB.removeArticle(articleId);
+    await goalgorithmDB.removeAllUpvoteRecord(articleId);
+    console.log('deleteed');
+    res.send({ status: true });
+  } catch (err) {
+    res.send(err);
+  }
+});
+
 router.get('/upvoteLists', async (req, res) => {
   const { userId, articleId } = req.query;
   console.log(req.query);

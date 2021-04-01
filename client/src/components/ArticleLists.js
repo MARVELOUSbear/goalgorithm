@@ -86,6 +86,25 @@ function ArticleLists({ perPage, domain }) {
     history.push('/editArticle/', id);
   };
 
+  const deleteArticle = async (id) => {
+    fetch('/deleteOneArticle', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        articleId: id,
+      }),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        window.location.reload();
+      })
+      .catch(() => {
+        console.log('Something wrong');
+      });
+  };
+
   const renderArticle = (article) => {
     return (
       <Article
@@ -103,6 +122,9 @@ function ArticleLists({ perPage, domain }) {
         editable={article.user_id === currentUser}
         onClickEdit={() => {
           EditArticle(article._id);
+        }}
+        onClickDelete={() => {
+          deleteArticle(article._id);
         }}
       />
     );

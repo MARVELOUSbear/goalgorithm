@@ -173,6 +173,21 @@ module.exports = {
       client.close();
     }
   },
+  removeAllUpvoteRecord: async (articleId) => {
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    try {
+      await client.connect();
+      const db = client.db('goalgorithm');
+      const upvoteLists = db.collection('upvoteList');
+      const x = await upvoteLists.deleteMany({
+        article_id: articleId,
+      });
+
+      return x;
+    } finally {
+      client.close();
+    }
+  },
   getArticleById: async (articleID) => {
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
@@ -254,6 +269,20 @@ module.exports = {
           },
         }
       );
+    } finally {
+      client.close();
+    }
+  },
+  removeArticle: async (articleId) => {
+    const client = new MongoClient(url, { useUnifiedTopology: true });
+    try {
+      // console.log(article);
+      await client.connect();
+      const db = client.db('goalgorithm');
+      const articles = db.collection('article');
+      await articles.deleteOne({
+        _id: ObjectId(articleId),
+      });
     } finally {
       client.close();
     }

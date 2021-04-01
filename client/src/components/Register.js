@@ -47,6 +47,11 @@ function Register() {
       .then((data) => {
         if (data.status) {
           localStorage.setItem('current_user', data.user_id);
+          Swal.fire({
+            icon: 'success',
+            title: 'Tada',
+            text: 'Welcome to goalgorithm!',
+          });
           history.push('/Articles');
         } else {
           console.log('Something wrong');

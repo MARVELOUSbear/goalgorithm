@@ -9,6 +9,11 @@ function Navigation() {
 
   const handleLogOut = async () => {
     localStorage.removeItem('current_user');
+    Swal.fire({
+      icon: 'success',
+      title: 'Goodbye~',
+      text: 'See you next time!',
+    });
     history.push('/login');
   };
 

@@ -46,7 +46,7 @@ function ArticleLists({ perPage, domain }) {
         '&itemPerPage=' +
         itemPerPage +
         '&userId=' +
-        currentUser +
+        localStorage.getItem('current_user') +
         '&tagFilter=' +
         tagFilter +
         '&searchFilter=' +
@@ -67,7 +67,7 @@ function ArticleLists({ perPage, domain }) {
   const getMyArticleCount = async (tagFilter, searchFilter) => {
     const resRaw = await fetch(
       '/myArticlesCount?userId=' +
-        currentUser +
+        localStorage.getItem('current_user') +
         '&tagFilter=' +
         tagFilter +
         '&searchFilter=' +
@@ -168,6 +168,11 @@ function ArticleLists({ perPage, domain }) {
         }}
         onClickTag={(tag) => {
           return () => {
+            Swal.fire(
+              'Filtered by ' + tag.name,
+              'Successfully filtered!',
+              'success'
+            );
             setTagFilter(tag.name);
           };
         }}
@@ -218,7 +223,7 @@ function ArticleLists({ perPage, domain }) {
       </div>
 
       <div className="articlelists-container">
-        <h1>All Articles</h1>
+        {domain === 'personal' ? <h1>My Articles</h1> : <h1>All Articles</h1>}
         {renderArticles()}
       </div>
       <div className="container mt-5">

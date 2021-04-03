@@ -212,9 +212,19 @@ function ArticleLists({ perPage, domain }) {
               placeholder="Search item"
               onChange={setSearchTempFilter}
               onSearchClick={() => {
+                Swal.fire(
+                  'Filtered by ' + searchFilter,
+                  'Successfully filtered!',
+                  'success'
+                );
                 setSearchFilter(searchTempFilter);
               }}
               onEnter={() => {
+                Swal.fire(
+                  'Filtered by ' + searchFilter,
+                  'Successfully filtered!',
+                  'success'
+                );
                 setSearchFilter(searchTempFilter);
               }}
             />

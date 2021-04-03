@@ -213,7 +213,7 @@ function ArticleLists({ perPage, domain }) {
               onChange={setSearchTempFilter}
               onSearchClick={() => {
                 Swal.fire(
-                  'Filtered by ' + searchFilter,
+                  'Search completed',
                   'Successfully filtered!',
                   'success'
                 );
@@ -221,7 +221,7 @@ function ArticleLists({ perPage, domain }) {
               }}
               onEnter={() => {
                 Swal.fire(
-                  'Filtered by ' + searchFilter,
+                  'Search completed',
                   'Successfully filtered!',
                   'success'
                 );

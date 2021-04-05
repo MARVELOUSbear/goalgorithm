@@ -271,7 +271,6 @@ module.exports = {
   updateArticleVotes: async (article) => {
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
-      // console.log(article);
       await client.connect();
       const db = client.db('goalgorithm');
       const articles = db.collection('article');
@@ -293,7 +292,6 @@ module.exports = {
   updateArticle: async (article) => {
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
-      // console.log(article);
       await client.connect();
       const db = client.db('goalgorithm');
       const articles = db.collection('article');
@@ -318,7 +316,6 @@ module.exports = {
   removeArticle: async (articleId) => {
     const client = new MongoClient(url, { useUnifiedTopology: true });
     try {
-      // console.log(article);
       await client.connect();
       const db = client.db('goalgorithm');
       const articles = db.collection('article');

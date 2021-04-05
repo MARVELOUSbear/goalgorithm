@@ -10,7 +10,6 @@ router.get('/testConnection', (req, res) => {
 
 router.post('/register', async (req, res) => {
   const user = req.body;
-  console.log(user);
   const hash = await bcrypt.hash(user.password, 10);
   const new_user = {
     ...user,
@@ -18,7 +17,6 @@ router.post('/register', async (req, res) => {
   };
   try {
     const userId = await goalgorithmDB.addUser(new_user);
-    console.log(userId);
     res.send({ status: true, user_id: userId });
   } catch {
     res.send({
@@ -53,7 +51,6 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/currentUser', async (req, res) => {
-  console.log('id is ', req.query);
   const { id } = req.query;
   try {
     const user = await goalgorithmDB.getUserById(id);
@@ -64,7 +61,6 @@ router.get('/currentUser', async (req, res) => {
 });
 
 router.get('/allArticles', async (req, res) => {
-  console.log(req.query);
   const { start, itemPerPage, tagFilter, searchFilter } = req.query;
   try {
     const articles = await goalgorithmDB.getArticles(
@@ -109,8 +105,6 @@ router.get('/articlesCount', async (req, res) => {
 
 router.get('/myArticlesCount', async (req, res) => {
   const { userId, tagFilter, searchFilter } = req.query;
-
-  console.log('why null', userId);
   try {
     const count = await goalgorithmDB.getUserArticlesCount(
       userId,
@@ -125,11 +119,9 @@ router.get('/myArticlesCount', async (req, res) => {
 });
 
 router.get('/articles/:id', async (req, res) => {
-  console.log(req.params.id);
   const articleId = req.params.id;
   try {
     const article = await goalgorithmDB.getArticleById(articleId);
-    // console.log(article);
     res.json(article);
   } catch (err) {
     res.send(err);
@@ -137,11 +129,9 @@ router.get('/articles/:id', async (req, res) => {
 });
 
 router.post('/articles/new', async (req, res) => {
-  console.log(req.body);
   const newArticle = req.body;
   try {
     const articleId = await goalgorithmDB.addArticle(newArticle);
-    // console.log(articleId);
     res.send({ status: true, articleId: articleId });
   } catch {
     res.send({
@@ -163,7 +153,6 @@ router.post('/updateArticleVotes', async (req, res) => {
 
 router.post('/updateArticle', async (req, res) => {
   const newArticle = req.body;
-  console.log(newArticle);
 
   try {
     await goalgorithmDB.updateArticle(newArticle);
@@ -175,12 +164,10 @@ router.post('/updateArticle', async (req, res) => {
 
 router.post('/deleteOneArticle', async (req, res) => {
   const { articleId } = req.body;
-  console.log(articleId);
 
   try {
     await goalgorithmDB.removeArticle(articleId);
     await goalgorithmDB.removeAllUpvoteRecord(articleId);
-    console.log('deleteed');
     res.send({ status: true });
   } catch (err) {
     res.send(err);
@@ -189,12 +176,10 @@ router.post('/deleteOneArticle', async (req, res) => {
 
 router.get('/upvoteLists', async (req, res) => {
   const { userId, articleId } = req.query;
-  console.log(req.query);
 
   try {
     const found = await goalgorithmDB.getUserUpvoteLists(userId, articleId);
     if (found) {
-      console.log('send true');
       res.send({ status: true });
     } else {
       res.send({ status: false });
@@ -206,7 +191,6 @@ router.get('/upvoteLists', async (req, res) => {
 
 router.post('/removeUpvoteLists', async (req, res) => {
   const { userId, articleId } = req.body;
-  console.log(req.body);
 
   try {
     await goalgorithmDB.removeUpvoteRecord(userId, articleId);
@@ -217,7 +201,6 @@ router.post('/removeUpvoteLists', async (req, res) => {
 });
 router.post('/upvoteLists', async (req, res) => {
   const { userId, articleId } = req.body;
-  console.log(req.body);
 
   try {
     await goalgorithmDB.addUpvoteRecord(userId, articleId);

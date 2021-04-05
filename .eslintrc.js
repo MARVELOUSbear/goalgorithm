@@ -1,9 +1,15 @@
 module.exports = {
   env: {
     browser: true,
+    commonjs: true,
     es2021: true,
   },
-  extends: ['eslint:recommended', 'plugin:react/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'prettier',
+    'eslint-config-prettier',
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -12,7 +18,6 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
-    indent: ['error', 'space'],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
   },

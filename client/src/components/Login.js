@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import { useHistory, Redirect } from 'react-router';
+import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
 import './Login.css';
 import Input from './Input';
 
 function Login() {
   const history = useHistory();
-  const [currentUser, setCurrentUser] = useState(null);
 
   const [loginFormData, setLoginFormData] = useState({
     email: '',
@@ -26,6 +24,7 @@ function Login() {
     if (token) {
       history.push('/Articles');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const submitLoginForm = (e) => {

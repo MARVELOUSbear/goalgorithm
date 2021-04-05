@@ -23,18 +23,6 @@ body {
   box-shadow: 0 2px 4px rgba(#000, 0.2);
   transition: 0.3s ease;
 }
-.article:hover {
-  box-shadow: 0 2px 4px rgba(#000, 0.2), 0 4px 8px rgba(#000, 0.2);
-}
-
-.article__date {
-}
-
-.article__excerpt {
-  color: #666;
-  line-height: 1.5rem;
-  font-size: 0.875rem;
-}
 
 .article__title {
   margin: 0 0 10px;

@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import { useHistory, Redirect } from 'react-router';
-import Swal from 'sweetalert2';
+import React from 'react';
+import PropTypes from 'prop-types';
 import './Tag.css';
 
 function Tag({ color, tag, onClick }) {
@@ -14,5 +12,11 @@ function Tag({ color, tag, onClick }) {
     </button>
   );
 }
+
+Tag.propTypes = {
+  color: PropTypes.string.isRequired,
+  tag: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+};
 
 export default Tag;

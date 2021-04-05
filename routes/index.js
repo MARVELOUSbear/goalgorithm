@@ -4,10 +4,6 @@ const bcrypt = require('bcrypt');
 
 const goalgorithmDB = require('../model/myDB');
 
-router.get('/testConnection', (req, res) => {
-  res.send({ msg: 'it is working now' });
-});
-
 router.post('/register', async (req, res) => {
   const user = req.body;
   const hash = await bcrypt.hash(user.password, 10);

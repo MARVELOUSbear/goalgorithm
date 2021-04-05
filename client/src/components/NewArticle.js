@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Row, Col } from 'react-bootstrap';
-import { useHistory, Redirect } from 'react-router';
+import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
 
 import Navigation from './Navigation';
@@ -9,8 +10,6 @@ import MultiSelect from 'react-multi-select-component';
 import './NewArticle.css';
 
 function NewArticle() {
-  const [currentUser, setCurrentUser] = useState(null);
-
   const [selected, setSelected] = useState([]);
   const history = useHistory();
   const [newArticleFormData, setNewArticleFormData] = useState({
@@ -22,7 +21,6 @@ function NewArticle() {
     user_name: '',
   });
   const onChangeEventListener = (e) => {
-    console.log(newArticleFormData);
     setNewArticleFormData({
       ...newArticleFormData,
       [e.target.name]: e.target.value,
@@ -32,8 +30,6 @@ function NewArticle() {
   const getUserInfo = async (token) => {
     const res = await fetch('/currentUser?id=' + token);
     const userInfo = await res.json();
-    console.log('get user info');
-    console.log(userInfo);
     setNewArticleFormData({
       ...newArticleFormData,
       user_id: userInfo._id,
@@ -44,7 +40,6 @@ function NewArticle() {
   useEffect(() => {
     const token = localStorage.getItem('current_user');
     if (token) {
-      console.log(token);
       getUserInfo(token);
     } else {
       history.push('/login');
@@ -55,7 +50,6 @@ function NewArticle() {
     const tags = selected.map((tag) => {
       return colors[tag.value];
     });
-    console.log(tags);
     setNewArticleFormData({
       ...newArticleFormData,
       tags: tags,
@@ -63,7 +57,6 @@ function NewArticle() {
   }, [selected]);
 
   const handleSubmit = (event) => {
-    const form = event.currentTarget;
     event.preventDefault();
     event.stopPropagation();
     postNewArticleData();
@@ -79,7 +72,6 @@ function NewArticle() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status) {
-          console.log(data.status);
           Swal.fire({
             icon: 'success',
             title: 'Tada',

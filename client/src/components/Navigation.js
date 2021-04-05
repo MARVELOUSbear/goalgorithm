@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import { useHistory, Redirect } from 'react-router';
+import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
 
 function Navigation() {
@@ -65,9 +65,9 @@ function Navigation() {
             <li className="nav-item dropdown">
               <a
                 className="nav-link dropdown-toggle"
-                href="#"
                 id="navbarDropdown"
                 role="button"
+                href
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
@@ -90,7 +90,7 @@ function Navigation() {
           <div className="justify-content-end">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <a className="nav-link active" aria-current="page" href>
                   Welcome, {userName}
                 </a>
               </li>

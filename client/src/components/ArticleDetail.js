@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from 'react';
 import { Card } from 'react-bootstrap';
-import { useLocation, useHistory, Redirect } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Navigation from './Navigation';
 import Tag from './Tag';
@@ -9,7 +10,7 @@ import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
 import './ArticleDetail.css';
 
-function ArticleDetail(props) {
+function ArticleDetail() {
   const location = useLocation();
   const resettingRef = useRef(false);
 
@@ -22,11 +23,9 @@ function ArticleDetail(props) {
     votes: 0,
   });
   const [upvoted, setUpvoted] = useState(false);
-  const [trigger, setTrigger] = useState(false);
   const getArticle = async () => {
     const resRaw = await fetch('/articles/' + articleID);
     const res = await resRaw.json();
-    console.log(res);
     setArticle(res);
   };
   useEffect(() => {
@@ -35,7 +34,6 @@ function ArticleDetail(props) {
 
   useEffect(() => {
     checkIfUpvoted();
-    console.log(upvoted);
   }, []);
   useEffect(() => {
     if (resettingRef.current) {
@@ -169,8 +167,6 @@ function ArticleDetail(props) {
                     ...article,
                     votes: article.votes - 1,
                   });
-
-                  //Swal
                 } else {
                   resettingRef.current = true;
                   setArticle({
@@ -178,15 +174,11 @@ function ArticleDetail(props) {
                     votes: article.votes + 1,
                   });
                   console.log(article);
-
-                  //Swal
                 }
-                console.log('toggled');
               }}
             />
           </label>
         </Card>
-        <h1></h1>
       </div>
     </>
   );

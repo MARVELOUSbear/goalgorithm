@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useHistory, Redirect } from 'react-router';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import { InputGroup, Form, Button } from 'react-bootstrap';
-import Input from './Input';
 import Swal from 'sweetalert2';
 
 function Register() {
@@ -14,7 +13,6 @@ function Register() {
   const [validated, setValidated] = useState(false);
 
   const onChangeEventListener = (e) => {
-    console.log(registerFormData);
     setRegisterFormData({
       ...registerFormData,
       [e.target.name]: e.target.value,

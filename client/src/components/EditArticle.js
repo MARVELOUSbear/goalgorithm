@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import { Button, Form, Row, Col } from 'react-bootstrap';
-import { useLocation, useHistory, Redirect } from 'react-router';
+import { useLocation, useHistory } from 'react-router';
 import Swal from 'sweetalert2';
 
 import Navigation from './Navigation';
@@ -66,7 +67,6 @@ function EditArticle() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status) {
-          console.log(data.status);
           Swal.fire({
             icon: 'success',
             title: 'Awesome!',

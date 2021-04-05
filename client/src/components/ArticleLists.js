@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import { useHistory, Redirect } from 'react-router';
+import { useHistory } from 'react-router';
+import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 import Pagination from 'react-js-pagination';
 import SearchField from 'react-search-field';
@@ -74,11 +75,9 @@ function ArticleLists({ perPage, domain }) {
         searchFilter
     );
     const count = await resRaw.json();
-    console.log('my articlr coutn ', count);
     setArticlesCount(count);
   };
   useEffect(() => {
-    console.log('set token');
     const token = localStorage.getItem('current_user');
     if (token) {
       setCurrentUser(token);
@@ -258,5 +257,10 @@ function ArticleLists({ perPage, domain }) {
     </>
   );
 }
+
+ArticleLists.propTypes = {
+  perPage: PropTypes.number.isRequired,
+  domain: PropTypes.string.isRequired,
+};
 
 export default ArticleLists;

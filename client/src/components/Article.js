@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
-import { useHistory, Redirect } from 'react-router';
-import Swal from 'sweetalert2';
+import PropTypes from 'prop-types';
 import './Article.css';
 import Tag from './Tag';
 import Description from './Description';
@@ -59,5 +58,16 @@ function Article({
     </>
   );
 }
+
+Article.propTypes = {
+  tags: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  editable: PropTypes.bool.isRequired,
+  onClickEdit: PropTypes.func,
+  onView: PropTypes.func,
+  onClickDelete: PropTypes.func,
+  onClickTag: PropTypes.func,
+};
 
 export default Article;

@@ -67,7 +67,7 @@ function Navigation() {
                 className="nav-link dropdown-toggle"
                 id="navbarDropdown"
                 role="button"
-                href
+                href="/"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
@@ -90,7 +90,7 @@ function Navigation() {
           <div className="justify-content-end">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href>
+                <a className="nav-link active" aria-current="page" href="/">
                   Welcome, {userName}
                 </a>
               </li>

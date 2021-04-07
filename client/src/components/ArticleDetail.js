@@ -124,11 +124,13 @@ function ArticleDetail() {
 
   const renderTags = () => {
     const tags = article.tags;
-    return tags.map((tag) => {
-      return renderTag(tag.color, tag.name);
+    return tags.map((tag, i) => {
+      return renderTag(tag.color, tag.name, i);
     });
   };
-  const renderTag = (color, name) => <Tag color={color} tag={name} />;
+  const renderTag = (color, name, i) => (
+    <Tag key={i} color={color} tag={name} />
+  );
 
   return (
     <>

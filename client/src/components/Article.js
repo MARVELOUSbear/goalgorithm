@@ -15,12 +15,12 @@ function Article({
   onClickEdit,
   onClickDelete,
 }) {
-  const renderTag = (color, name, onClick) => (
-    <Tag color={color} tag={name} onClick={onClick} />
+  const renderTag = (color, name, onClick, i) => (
+    <Tag key={i} color={color} tag={name} onClick={onClick} />
   );
   const renderTags = () => {
-    return tags.map((tag) => {
-      return renderTag(tag.color, tag.name, onClickTag(tag));
+    return tags.map((tag, i) => {
+      return renderTag(tag.color, tag.name, onClickTag(tag), i);
     });
   };
 

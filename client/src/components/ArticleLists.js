@@ -159,6 +159,7 @@ function ArticleLists({ perPage, domain }) {
   const renderArticle = (article) => {
     return (
       <Article
+        key={article._id}
         tags={article.tags}
         title={article.title}
         description={article.description}

@@ -28,11 +28,37 @@ function Register() {
       console.log('invalid');
     } else {
       console.log('validation passed');
-      postRegisterData();
+      // add check email exists.
+      checkEmail();
+      // postRegisterData();
     }
     setValidated(true);
   };
 
+  const checkEmail = async () => {
+    fetch('/checkEmail', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: registerFormData.email }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.exist) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Email already used',
+            text: 'This email has already been used, please log in instead!',
+          });
+        } else {
+          postRegisterData();
+        }
+      })
+      .catch(() => {
+        console.error('Error');
+      });
+  };
   const postRegisterData = async () => {
     fetch('/register', {
       method: 'POST',

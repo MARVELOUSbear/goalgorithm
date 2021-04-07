@@ -56,6 +56,25 @@ router.get('/currentUser', async (req, res) => {
   }
 });
 
+router.post('/checkEmail', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await goalgorithmDB.getUser(email);
+    if (!user) {
+      res.send({
+        exist: false,
+      });
+    } else {
+      res.send({
+        exist: true,
+      });
+    }
+  } catch (err) {
+    res.send(err);
+  }
+});
+
 router.get('/allArticles', async (req, res) => {
   const { start, itemPerPage, tagFilter, searchFilter } = req.query;
   try {

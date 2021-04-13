@@ -1,0 +1,16 @@
+UX Feedbacks:
+
+1. Great Styles and the webpage is very easy to use!
+2. The "Tada" Dialog is cute. However, it is a little distractive for user.
+3. While filtering by a tag, there is no way to remove the filter except clicking the Home link. (this could be a future feature)
+4. The search item input requires enter to take effect. It will be better if it can do search with the input.
+5. the layout of Edit/Delete buttons in the "My Articles" may need some improve.
+6. Maybe have a logo to replace the "Your Company Logo" in the login page.
+
+Code feedback:
+
+1. nice code organization!
+2. remove unused files like App.css.
+3. should have propTypes for all the components
+4. in NewArticle.js, used then() in some async functions. async/await should be better
+5. in myDB.js, "tagFilter === '' || tagFilter === undefined" could be simplied as "!tagFilter"

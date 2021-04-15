@@ -1,0 +1,6 @@
+I really like your design. Clean and neat. the color of all the tabs are cute. Code structure is well organized. 
+Since I am doing user authentication part in our own project. In the code review, I checked the a bit about user authentication part. 
+I saw you involved Email verification in the user registation part which is pretty good. 
+I tried use invalid email like "test@111" which is invalid email but it passed. 
+I am wondering if in the future it could be a small improvement to set more email verification rules. 
+Overall, I really like your project. 
